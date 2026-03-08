@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Games — Lucky777</title>
+<link rel="stylesheet" href="css/main.css">
+<style>
+main { position:relative; z-index:2; max-width:960px; margin:0 auto; padding:calc(var(--nav-h) + 32px) 18px 80px; }
+.game-hero { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:28px; transition:border-color 0.3s; }
+.game-hero:hover { border-color:rgba(245,197,24,0.45); box-shadow:0 20px 60px rgba(245,197,24,0.08); }
+.gh-top { padding:36px 32px; position:relative; overflow:hidden; }
+.gh-top::before { content:''; position:absolute; inset:0; background:var(--gh-grad); opacity:0.12; }
+.gh-emoji { font-size:58px; display:block; margin-bottom:16px; position:relative; z-index:1; }
+.gh-title { font-family:'Cinzel',serif; font-size:clamp(24px,5vw,38px); font-weight:900; margin-bottom:10px; position:relative; z-index:1; }
+.gh-desc { font-size:16px; color:var(--muted); line-height:1.7; max-width:520px; margin-bottom:20px; position:relative; z-index:1; }
+.gh-stats { display:flex; gap:20px; flex-wrap:wrap; position:relative; z-index:1; }
+.gh-stat { font-size:14px; display:flex; align-items:center; gap:6px; }
+.gh-stat .lbl { color:var(--muted); }
+.gh-stat .val { color:var(--gold); font-weight:700; font-family:'Cinzel',serif; }
+.gh-prizes { display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:10px; margin-top:22px; position:relative; z-index:1; }
+.gh-prize-item { background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 8px; text-align:center; }
+.ghpi-val { font-family:'Cinzel',serif; font-size:15px; font-weight:700; color:var(--gold); display:block; }
+.ghpi-lbl { font-size:11px; color:var(--muted); margin-top:3px; display:block; }
+.gh-bottom { padding:22px 32px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; background:rgba(0,0,0,0.15); }
+.gh-price small { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; display:block; }
+.gh-price strong { font-family:'Cinzel',serif; font-size:22px; color:var(--gold); }
+.gh-actions { display:flex; gap:10px; }
+.g-jackpot .gh-top { --gh-grad: linear-gradient(135deg,#f5c518,#e8a000); }
+.g-predict .gh-top { --gh-grad: linear-gradient(135deg,#8e44ad,#6c3483); }
+.g-spin    .gh-top { --gh-grad: linear-gradient(135deg,#27ae60,#1e8449); }
+@media(max-width:580px){
+  .gh-top{padding:26px 20px}
+  .gh-bottom{padding:18px 20px;flex-direction:column;align-items:flex-start}
+  .gh-actions{flex-direction:column;width:100%}
+  .gh-actions a{text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">🎰 LUCKY777</a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a>
+    <a href="games.html" class="active">Games</a>
+    <a href="results.html">Results</a>
+    <a href="how-to-play.html">How To Play</a>
+    <a href="play.html" class="nav-cta">🎰 Play Now</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Home</a>
+  <a href="games.html" class="active">🎮 Games</a>
+  <a href="results.html">📊 Results</a>
+  <a href="how-to-play.html">📖 How To Play</a>
+  <div class="mobile-nav-divider"></div>
+  <a href="play.html" class="nav-cta-mob">🎰 Play Now</a>
+</nav>
+
+<main>
+  <div style="text-align:center;margin-bottom:44px">
+    <span class="section-eyebrow">🎮 All Games</span>
+    <h1 style="font-family:'Cinzel',serif;font-size:clamp(28px,7vw,48px);font-weight:900;margin-bottom:10px">Choose Your Game</h1>
+    <p style="font-size:15px;color:var(--muted);max-width:480px;margin:0 auto">Three ways to win — all from ₹5 entry, all results delivered on WhatsApp instantly.</p>
+  </div>
+
+  <!-- JACKPOT -->
+  <div class="game-hero g-jackpot card-hover" data-anim="anim-fadeUp">
+    <div class="gh-top">
+      <span class="gh-emoji">💰</span>
+      <div class="gh-title">Jackpot Lottery</div>
+      <div class="gh-desc">India's biggest daily lottery. Pick 6 lucky numbers from 1–50. Match all 6 to win the ₹1,77,777 jackpot. Even matching 2 numbers wins real cash!</div>
+      <div class="gh-stats">
+        <div class="gh-stat"><span class="lbl">🏆 Jackpot:</span><span class="val">₹1,77,777</span></div>
+        <div class="gh-stat"><span class="lbl">⏰ Draw:</span><span class="val">Daily 8:00 PM</span></div>
+        <div class="gh-stat"><span class="lbl">🎯 Pick:</span><span class="val">6 from 50</span></div>
+        <div class="gh-stat"><span class="lbl">📊 Winners daily:</span><span class="val">30–50+</span></div>
+      </div>
+      <div class="gh-prizes">
+        <div class="gh-prize-item"><span class="ghpi-val">₹1,77,777</span><span class="ghpi-lbl">6 Match</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹5,000</span><span class="ghpi-lbl">5 Match</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹500</span><span class="ghpi-lbl">4 Match</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹100</span><span class="ghpi-lbl">3 Match</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹30</span><span class="ghpi-lbl">2 Match</span></div>
+      </div>
+    </div>
+    <div class="gh-bottom">
+      <div class="gh-price"><small>Entry from</small><strong>₹5 / $0.10</strong></div>
+      <div class="gh-actions">
+        <a href="how-to-play.html" class="btn btn-outline btn-md">Learn More</a>
+        <a href="play.html?game=jackpot" class="btn btn-gold btn-md">💰 Play Now →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREDICT -->
+  <div class="game-hero g-predict card-hover" data-anim="anim-fadeUp delay-2">
+    <div class="gh-top">
+      <span class="gh-emoji">🔮</span>
+      <div class="gh-title">Number Prediction</div>
+      <div class="gh-desc">Think you know what number is lucky? Pick ONE number from 1–50. Every hour, a number is drawn live by our team. Exact match = 35× your entry, paid instantly!</div>
+      <div class="gh-stats">
+        <div class="gh-stat"><span class="lbl">💰 Multiplier:</span><span class="val">35× Entry</span></div>
+        <div class="gh-stat"><span class="lbl">⏰ Draw:</span><span class="val">Every Hour</span></div>
+        <div class="gh-stat"><span class="lbl">🎯 Odds:</span><span class="val">1 in 50</span></div>
+        <div class="gh-stat"><span class="lbl">🔄 Daily Draws:</span><span class="val">24</span></div>
+      </div>
+      <div class="gh-prizes">
+        <div class="gh-prize-item"><span class="ghpi-val">₹175</span><span class="ghpi-lbl">₹5 entry</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹350</span><span class="ghpi-lbl">₹10 entry</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹700</span><span class="ghpi-lbl">₹20 entry</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹1,050</span><span class="ghpi-lbl">₹30 entry</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">₹1,750</span><span class="ghpi-lbl">₹50 entry</span></div>
+      </div>
+    </div>
+    <div class="gh-bottom">
+      <div class="gh-price"><small>Entry from</small><strong>₹5 / $0.10</strong></div>
+      <div class="gh-actions">
+        <a href="how-to-play.html" class="btn btn-outline btn-md">Learn More</a>
+        <a href="play.html?game=predict" class="btn btn-gold btn-md">🔮 Play Now →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPIN -->
+  <div class="game-hero g-spin card-hover" data-anim="anim-fadeUp delay-4">
+    <div class="gh-top">
+      <span class="gh-emoji">🎡</span>
+      <div class="gh-title">Spin the Wheel</div>
+      <div class="gh-desc">Pick your lucky colour from our 6-segment prize wheel. After confirming payment, our team spins the wheel LIVE on WhatsApp video. Land on your colour and win up to 5× your entry!</div>
+      <div class="gh-stats">
+        <div class="gh-stat"><span class="lbl">🏆 Max Win:</span><span class="val">5× Entry</span></div>
+        <div class="gh-stat"><span class="lbl">📹 Proof:</span><span class="val">Live Video</span></div>
+        <div class="gh-stat"><span class="lbl">🎨 Segments:</span><span class="val">6 Colours</span></div>
+        <div class="gh-stat"><span class="lbl">⚡ Result:</span><span class="val">Instant</span></div>
+      </div>
+      <div class="gh-prizes">
+        <div class="gh-prize-item"><span class="ghpi-val">2×</span><span class="ghpi-lbl">🔴 Red</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">3×</span><span class="ghpi-lbl">⭐ Gold</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">2×</span><span class="ghpi-lbl">🟢 Green</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">4×</span><span class="ghpi-lbl">🔵 Blue</span></div>
+        <div class="gh-prize-item"><span class="ghpi-val">5×</span><span class="ghpi-lbl">💜 Purple</span></div>
+      </div>
+    </div>
+    <div class="gh-bottom">
+      <div class="gh-price"><small>Entry from</small><strong>₹10 / $0.25</strong></div>
+      <div class="gh-actions">
+        <a href="how-to-play.html" class="btn btn-outline btn-md">Learn More</a>
+        <a href="play.html?game=spin" class="btn btn-gold btn-md">🎡 Play Now →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div style="text-align:center;margin-top:40px">
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">✅</span> 100% Transparent</div>
+      <div class="trust-item"><span class="trust-icon">🔒</span> Secure Payments</div>
+      <div class="trust-item"><span class="trust-icon">📱</span> WhatsApp Delivery</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> Instant Tickets</div>
+      <div class="trust-item"><span class="trust-icon">💸</span> Fast Payouts</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-logo">🎰 LUCKY777</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="games.html">Games</a>
+      <a href="results.html">Results</a><a href="how-to-play.html">How To Play</a>
+      <a href="play.html">Play Now</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-disclaimer">⚠️ Lucky777 is an entertainment platform. Must be 18+. Max entry ₹50. Play responsibly.</div>
+    <div class="footer-copy">© 2025 Lucky777. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

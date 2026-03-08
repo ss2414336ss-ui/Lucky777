@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="description" content="Lucky777 — India's most exciting lottery platform. Jackpot, Number Prediction, Spin the Wheel. Entries from just ₹5. WhatsApp delivery!">
+<meta name="theme-color" content="#080808">
+<title>Lucky777 — Win Big Every Day | Jackpot from ₹5</title>
+<link rel="stylesheet" href="css/main.css">
+<style>
+/* ---- HERO ---- */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: calc(var(--nav-h) + 40px) 24px 60px;
+  position: relative; z-index: 2;
+}
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+.hero-h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(44px, 11vw, 96px);
+  font-weight: 900; line-height: 0.88; margin-bottom: 22px;
+}
+.hero-h1 .line1 {
+  background: linear-gradient(135deg, #fff8dc 0%, var(--gold) 50%, #fff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block;
+}
+.hero-h1 .line2 {
+  background: linear-gradient(135deg, var(--gold2), var(--red), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block;
+  font-size: 0.46em; letter-spacing: 10px; margin-top: 10px;
+}
+.hero-sub { font-size: clamp(15px, 2.5vw, 20px); color: var(--muted); line-height: 1.75; max-width: 560px; margin: 0 auto 36px; }
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+
+/* Jackpot box */
+.jackpot-box {
+  display: inline-block;
+  background: rgba(245,197,24,0.06);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 22px 36px; animation: floatY 3.5s ease-in-out infinite;
+}
+.jackpot-box .jlabel { font-size: 11px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 6px; }
+.jackpot-box .jval {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(32px, 7vw, 58px); font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), #fff, var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: block;
+}
+.jackpot-box .jsub { font-size: 13px; color: var(--muted); margin-top: 6px; letter-spacing: 1px; }
+
+/* ---- GAMES SECTION ---- */
+.games-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 20px;
+}
+.game-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  transition: all 0.3s; position: relative;
+}
+.game-card:hover { border-color: rgba(245,197,24,0.5); transform: translateY(-6px); box-shadow: 0 24px 60px rgba(245,197,24,0.12); }
+.gc-top {
+  padding: 32px 26px 24px;
+  background: linear-gradient(135deg, rgba(245,197,24,0.07), transparent);
+  border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.gc-top::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,197,24,0.1), transparent);
+}
+.gc-emoji { font-size: 50px; display: block; margin-bottom: 16px; }
+.gc-name { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.gc-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.gc-bottom { padding: 18px 26px; display: flex; justify-content: space-between; align-items: center; }
+.gc-price .pf  { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; display: block; }
+.gc-price .pv  { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: var(--gold); }
+.gc-tag {
+  position: absolute; top: 14px; right: 14px;
+  font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 100px;
+}
+
+/* ---- HOW IT WORKS ---- */
+.how-bg { background: rgba(245,197,24,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.steps-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 24px; position: relative; }
+.step { text-align: center; position: relative; }
+.step-line {
+  position: absolute; top: 30px; left: calc(50% + 30px); right: calc(-50% + 30px);
+  height: 1px; background: linear-gradient(90deg, var(--border), transparent);
+}
+.step:last-child .step-line { display: none; }
+.step-circle {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--gold-dim); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 20px; font-weight: 900; color: var(--gold);
+  margin: 0 auto 18px;
+}
+.step-title { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.step-desc  { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* ---- PRIZES TABLE ---- */
+.prize-table { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.pt-header { padding: 20px 24px; border-bottom: 1px solid var(--border); font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; background: linear-gradient(135deg, rgba(245,197,24,0.05), transparent); }
+.pt-row { display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 14px 24px; border-bottom: 1px solid var(--border-soft); font-size: 14px; gap: 8px; }
+.pt-row:last-child { border-bottom: none; }
+.pt-row.head { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); background: rgba(245,197,24,0.03); font-weight: 700; }
+.pt-prize { font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold); }
+
+/* ---- TESTIMONIALS ---- */
+.testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 18px; }
+.testi-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+.testi-stars { color: var(--gold); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+.testi-text { font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 16px; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.testi-name { font-size: 14px; font-weight: 700; }
+.testi-loc  { font-size: 12px; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .hero-h1 .line2 { letter-spacing: 4px; }
+  .step-line { display: none; }
+  .pt-row { grid-template-columns: 2fr 1fr; }
+  .pt-row .pt-odds { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<canvas id="particleCanvas"></canvas>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">🎰 LUCKY777</a>
+  <div class="navbar-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="games.html">Games</a>
+    <a href="results.html">Results</a>
+    <a href="how-to-play.html">How To Play</a>
+    <a href="play.html" class="nav-cta">🎰 Play Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Home</a>
+  <a href="games.html">🎮 Games</a>
+  <a href="results.html">📊 Results</a>
+  <a href="how-to-play.html">📖 How To Play</a>
+  <div class="mobile-nav-divider"></div>
+  <a href="play.html" class="nav-cta-mob">🎰 Play Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div style="max-width:840px;margin:0 auto" class="anim-fadeUp">
+    <div class="hero-badge badge badge-live anim-fadeDown">Live draws every day</div>
+    <h1 class="hero-h1">
+      <span class="line1">LUCKY 777</span>
+      <span class="line2">YOUR JACKPOT AWAITS</span>
+    </h1>
+    <p class="hero-sub">India's most exciting lottery platform. Jackpot, Number Prediction & Spin the Wheel — starting from just <strong style="color:var(--gold)">₹5</strong>. Ticket delivered to your WhatsApp instantly!</p>
+    <div class="hero-btns">
+      <a href="play.html" class="btn btn-gold btn-lg">🎰 Try Your Luck</a>
+      <a href="how-to-play.html" class="btn btn-outline btn-lg">How It Works</a>
+    </div>
+    <div class="jackpot-box anim-glow">
+      <span class="jlabel">🔥 Today's Jackpot</span>
+      <span class="jval" id="jackpotAmt">₹1,77,777</span>
+      <span class="jsub">Next draw in <strong id="countdownTimer" style="color:var(--gold)">--:--:--</strong></span>
+    </div>
+  </div>
+</section>
+
+<!-- WINNER STRIP -->
+<div class="winner-strip">
+  <div class="winner-strip-inner" id="winnerStrip"></div>
+</div>
+
+<!-- GAMES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">🎮 Choose Your Game</span>
+      <h2 class="section-title">3 Ways to Win Big</h2>
+      <p class="section-sub">Simple, fast, fair. All games drawn live — results sent directly to your WhatsApp.</p>
+    </div>
+    <div class="games-grid">
+
+      <a href="play.html?game=jackpot" class="game-card card-hover" data-anim="anim-scaleIn">
+        <span class="gc-tag badge badge-red">🔥 Most Popular</span>
+        <div class="gc-top">
+          <span class="gc-emoji">💰</span>
+          <div class="gc-name">Jackpot Lottery</div>
+          <div class="gc-desc">Pick 6 numbers from 1–50. Match all 6 to win the jackpot. Even 2 matches wins a prize!</div>
+        </div>
+        <div class="gc-bottom">
+          <div class="gc-price"><span class="pf">Entry from</span><span class="pv">₹5</span></div>
+          <span class="btn btn-gold btn-sm">Play →</span>
+        </div>
+      </a>
+
+      <a href="play.html?game=predict" class="game-card card-hover" data-anim="anim-scaleIn delay-2">
+        <span class="gc-tag badge badge-gold">⚡ Hourly</span>
+        <div class="gc-top">
+          <span class="gc-emoji">🔮</span>
+          <div class="gc-name">Number Prediction</div>
+          <div class="gc-desc">Predict the lucky number (1–50) drawn every hour. Exact match wins 35× your entry!</div>
+        </div>
+        <div class="gc-bottom">
+          <div class="gc-price"><span class="pf">Entry from</span><span class="pv">₹5</span></div>
+          <span class="btn btn-gold btn-sm">Play →</span>
+        </div>
+      </a>
+
+      <a href="play.html?game=spin" class="game-card card-hover" data-anim="anim-scaleIn delay-4">
+        <span class="gc-tag badge badge-green">✨ New</span>
+        <div class="gc-top">
+          <span class="gc-emoji">🎡</span>
+          <div class="gc-name">Spin the Wheel</div>
+          <div class="gc-desc">Pick a colour. We spin LIVE and send you the video on WhatsApp. Win up to 5× entry!</div>
+        </div>
+        <div class="gc-bottom">
+          <div class="gc-price"><span class="pf">Entry from</span><span class="pv">₹10</span></div>
+          <span class="btn btn-gold btn-sm">Play →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg">
+  <div class="container-md">
+    <div class="section-header">
+      <span class="section-eyebrow">📖 Simple Process</span>
+      <h2 class="section-title">From ₹5 to Winning</h2>
+      <p class="section-sub">4 easy steps. No app download needed.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step" data-anim="anim-fadeUp">
+        <div class="step-line"></div>
+        <div class="step-circle">1</div>
+        <div class="step-title">Pick a Game</div>
+        <div class="step-desc">Choose Jackpot, Prediction or Spin. All starting from ₹5.</div>
+      </div>
+      <div class="step" data-anim="anim-fadeUp delay-2">
+        <div class="step-line"></div>
+        <div class="step-circle">2</div>
+        <div class="step-title">Pay by UPI</div>
+        <div class="step-desc">GPay, PhonePe, Paytm, BHIM or Bank Transfer. Fast & safe.</div>
+      </div>
+      <div class="step" data-anim="anim-fadeUp delay-3">
+        <div class="step-line"></div>
+        <div class="step-circle">3</div>
+        <div class="step-title">Get Ticket</div>
+        <div class="step-desc">Ticket with your unique ID arrives on WhatsApp in under 5 min.</div>
+      </div>
+      <div class="step" data-anim="anim-fadeUp delay-4">
+        <div class="step-circle">4</div>
+        <div class="step-title">Win & Collect</div>
+        <div class="step-desc">Results on WhatsApp. Winners paid to UPI within 24 hours!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS + TRUST -->
+<section class="section">
+  <div class="container-md">
+    <div class="section-header">
+      <span class="section-eyebrow">📊 Platform Stats</span>
+      <h2 class="section-title">Trusted by Thousands</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card" data-anim="anim-scaleIn"><span class="stat-value">14,200+</span><span class="stat-label">Happy Players</span></div>
+      <div class="stat-card" data-anim="anim-scaleIn delay-1"><span class="stat-value">₹42L+</span><span class="stat-label">Total Paid Out</span></div>
+      <div class="stat-card" data-anim="anim-scaleIn delay-2"><span class="stat-value">Daily</span><span class="stat-label">Live Draws</span></div>
+      <div class="stat-card" data-anim="anim-scaleIn delay-3"><span class="stat-value">₹5</span><span class="stat-label">Minimum Entry</span></div>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">✅</span> 100% Transparent Draws</div>
+      <div class="trust-item"><span class="trust-icon">🔒</span> Secure UPI Payments</div>
+      <div class="trust-item"><span class="trust-icon">📱</span> WhatsApp Ticket Delivery</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> Instant Confirmation</div>
+      <div class="trust-item"><span class="trust-icon">🏆</span> Verified Winners Daily</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIZE OVERVIEW -->
+<section class="section how-bg">
+  <div class="container-md">
+    <div class="section-header">
+      <span class="section-eyebrow">🏆 Prize Tables</span>
+      <h2 class="section-title">What You Can Win</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+
+      <div class="prize-table">
+        <div class="pt-header">💰 Jackpot Lottery</div>
+        <div class="pt-row head"><span>Match</span><span>Odds</span><span>Prize</span></div>
+        <div class="pt-row"><span>6 Numbers</span><span class="text-muted">1 in 15M</span><span class="pt-prize">₹1,77,777</span></div>
+        <div class="pt-row"><span>5 Numbers</span><span class="text-muted">1 in 55K</span><span class="pt-prize">₹5,000</span></div>
+        <div class="pt-row"><span>4 Numbers</span><span class="text-muted">1 in 1,032</span><span class="pt-prize">₹500</span></div>
+        <div class="pt-row"><span>3 Numbers</span><span class="text-muted">1 in 57</span><span class="pt-prize">₹100</span></div>
+        <div class="pt-row"><span>2 Numbers</span><span class="text-muted">1 in 8</span><span class="pt-prize">₹30</span></div>
+      </div>
+
+      <div class="prize-table">
+        <div class="pt-header">🔮 Number Prediction</div>
+        <div class="pt-row head"><span>Result</span><span>Odds</span><span>Prize</span></div>
+        <div class="pt-row"><span>Exact Match</span><span class="text-muted">1 in 50</span><span class="pt-prize">35× Entry</span></div>
+        <div class="pt-row"><span style="color:var(--muted)">Example ₹5</span><span class="text-muted">—</span><span class="pt-prize" style="color:var(--green)">₹175</span></div>
+        <div class="pt-row"><span style="color:var(--muted)">Example ₹20</span><span class="text-muted">—</span><span class="pt-prize" style="color:var(--green)">₹700</span></div>
+        <div class="pt-row"><span style="color:var(--muted)">Example ₹50</span><span class="text-muted">—</span><span class="pt-prize" style="color:var(--green)">₹1,750</span></div>
+        <div class="pt-row"><span style="color:var(--muted)">Max ₹50 entry</span><span class="text-muted">—</span><span class="pt-prize" style="color:var(--green)">₹1,750</span></div>
+      </div>
+
+      <div class="prize-table">
+        <div class="pt-header">🎡 Spin the Wheel</div>
+        <div class="pt-row head"><span>Segment</span><span>Chance</span><span>Win</span></div>
+        <div class="pt-row"><span>🔴 Red</span><span class="text-muted">2 in 6</span><span class="pt-prize">2× Entry</span></div>
+        <div class="pt-row"><span>⭐ Gold</span><span class="text-muted">1 in 6</span><span class="pt-prize">3× Entry</span></div>
+        <div class="pt-row"><span>🔵 Blue</span><span class="text-muted">1 in 6</span><span class="pt-prize">4× Entry</span></div>
+        <div class="pt-row"><span>💜 Purple</span><span class="text-muted">1 in 6</span><span class="pt-prize">5× Entry!</span></div>
+        <div class="pt-row"><span>💛 Yellow</span><span class="text-muted">1 in 6</span><span class="pt-prize">3× Entry</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container-md">
+    <div class="section-header">
+      <span class="section-eyebrow">⭐ Player Reviews</span>
+      <h2 class="section-title">Winners Speak</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card" data-anim="anim-fadeUp">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Won ₹700 on my very first prediction! Got the payment in my GPay within 2 hours. So easy and genuine!"</div>
+        <div class="testi-author"><div class="testi-avatar">😊</div><div><div class="testi-name">Rahul K.</div><div class="testi-loc">Mumbai, Maharashtra</div></div></div>
+      </div>
+      <div class="testi-card" data-anim="anim-fadeUp delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Entry was only ₹30 and I won ₹900 on Spin the Wheel. They sent the live video on WhatsApp! Totally legit."</div>
+        <div class="testi-author"><div class="testi-avatar">🌸</div><div><div class="testi-name">Priya S.</div><div class="testi-loc">Delhi, NCR</div></div></div>
+      </div>
+      <div class="testi-card" data-anim="anim-fadeUp delay-4">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I play the Jackpot every day with ₹10. Already won 3 times! The WhatsApp ticket system is very professional."</div>
+        <div class="testi-author"><div class="testi-avatar">💪</div><div><div class="testi-name">Arjun M.</div><div class="testi-loc">Bangalore, Karnataka</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section how-bg">
+  <div class="container-sm" style="text-align:center">
+    <span class="section-eyebrow">🍀 Ready?</span>
+    <h2 class="section-title">Start With Just ₹5!</h2>
+    <p class="section-sub" style="margin:0 auto 32px">Join 14,000+ players who try their luck every day. Pick numbers, spin the wheel, win real money!</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="play.html" class="btn btn-gold btn-lg anim-glow">🎰 Play Now — From ₹5</a>
+      <a href="https://wa.me/919876543210?text=Hi%20Lucky777%2C%20I%20want%20to%20play!" class="btn btn-green btn-lg" target="_blank">💬 Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-logo">🎰 LUCKY777</span>
+    <p class="footer-desc">India's most trusted entertainment lottery platform. Transparent draws, instant WhatsApp delivery, and real winners every day.</p>
+    <a href="https://wa.me/919876543210" class="footer-wa" target="_blank">💬 WhatsApp Support</a>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="games.html">Games</a>
+      <a href="results.html">Results</a><a href="how-to-play.html">How To Play</a>
+      <a href="play.html">Play Now</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-disclaimer">
+      ⚠️ Lucky777 is an entertainment-based number prediction platform. Participation is voluntary and for entertainment purposes. Must be 18+ to participate. Maximum entry ₹50 per ticket. Please play responsibly. If gambling becomes a problem, please seek help.
+    </div>
+    <div class="footer-copy">© 2025 Lucky777. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

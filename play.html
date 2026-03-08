@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="description" content="Play Lucky777 — Jackpot, Number Prediction, Spin the Wheel. From ₹5 entry. WhatsApp delivery.">
+<meta name="theme-color" content="#080808">
+<title>Play Now — Lucky777</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/play.css">
+<style>
+.play-main { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; padding: calc(var(--nav-h) + 28px) 18px 80px; }
+.play-header { text-align: center; margin-bottom: 28px; }
+.play-header h1 { font-family: 'Cinzel', serif; font-size: clamp(26px, 6vw, 42px); font-weight: 900; margin-bottom: 8px; }
+
+/* result card styles from results.js */
+.green-text { color: #2ecc71; }
+.gold-text  { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">🎰 LUCKY777</a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a><a href="games.html">Games</a>
+    <a href="results.html">Results</a><a href="how-to-play.html">How To Play</a>
+    <a href="play.html" class="nav-cta active">🎰 Play Now</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Home</a><a href="games.html">🎮 Games</a>
+  <a href="results.html">📊 Results</a><a href="how-to-play.html">📖 How To Play</a>
+  <div class="mobile-nav-divider"></div>
+  <a href="play.html" class="nav-cta-mob">🎰 Play Now</a>
+</nav>
+
+<main class="play-main">
+
+  <!-- PAGE HEADER -->
+  <div class="play-header anim-fadeDown">
+    <span class="section-eyebrow">🎰 Try Your Luck</span>
+    <h1>Choose & Play</h1>
+    <p style="font-size:14px;color:var(--muted)">Entries from ₹5 only · Max ₹50 · WhatsApp ticket guaranteed</p>
+  </div>
+
+  <!-- STEP 1: GAME SELECTION -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-step-num" id="stepNum1">1</div>
+      <div>
+        <div class="panel-title">Select Game</div>
+        <div class="panel-subtitle">Pick the game you want to play today</div>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <!-- Game Tabs -->
+      <div class="game-tabs">
+        <div class="game-tab active" data-game="jackpot">
+          <span class="game-tab-icon">💰</span>
+          <span class="game-tab-name">Jackpot</span>
+          <span class="game-tab-price">From ₹5</span>
+        </div>
+        <div class="game-tab" data-game="predict">
+          <span class="game-tab-icon">🔮</span>
+          <span class="game-tab-name">Predict</span>
+          <span class="game-tab-price">From ₹5</span>
+        </div>
+        <div class="game-tab" data-game="spin">
+          <span class="game-tab-icon">🎡</span>
+          <span class="game-tab-name">Spin</span>
+          <span class="game-tab-price">From ₹10</span>
+        </div>
+      </div>
+
+      <!-- JACKPOT PANEL -->
+      <div class="game-panel active" id="panel-jackpot">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;letter-spacing:0.5px">
+          Pick exactly <strong style="color:var(--gold)">6 numbers</strong> from 1–50. Match more numbers = bigger prize!
+          <br><small>Click a ball in the row above to remove it.</small>
+        </div>
+        <!-- Selected display -->
+        <div class="selected-display" id="selectedDisplay">
+          <span class="selected-placeholder">Tap numbers below to pick your lucky 6...</span>
+        </div>
+        <div class="selected-info">
+          <span>Selected: <span class="selected-count" id="selCount">0</span> / 6</span>
+          <span style="font-size:12px;color:var(--muted)">Tap a ball above to remove it</span>
+        </div>
+        <!-- Number Grid -->
+        <div class="number-grid" id="numberGrid"></div>
+        <!-- Actions -->
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button id="clearBtn" class="btn btn-ghost btn-sm" style="flex:1">✕ Clear All</button>
+          <button id="luckyDipBtn" class="btn btn-outline btn-sm" style="flex:1">🎲 Lucky Dip</button>
+        </div>
+      </div>
+
+      <!-- PREDICT PANEL -->
+      <div class="game-panel" id="panel-predict">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px">
+          Pick <strong style="color:#9b59b6">1 number</strong> from 1–50. Correct = <strong style="color:var(--gold)">35× your entry</strong> instantly!
+        </div>
+        <div class="predict-grid" id="predictGrid"></div>
+        <div class="predict-chosen">Your pick: <span class="chosen-num" id="predictChosen">—</span></div>
+      </div>
+
+      <!-- SPIN PANEL -->
+      <div class="game-panel" id="panel-spin">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:14px">
+          Pick a <strong style="color:var(--gold)">colour segment</strong>. We spin LIVE and send you the video on WhatsApp!
+        </div>
+        <div class="spin-wrapper">
+          <div class="spin-wheel" id="spinWheel">
+            <div class="spin-center">🎰</div>
+          </div>
+          <div class="spin-segments">
+            <div class="spin-seg seg-red"    data-seg="Red"   >🔴 Red<span class="seg-mult">2× Win</span></div>
+            <div class="spin-seg seg-orange" data-seg="Gold"  >⭐ Gold<span class="seg-mult">3× Win</span></div>
+            <div class="spin-seg seg-green"  data-seg="Green" >🟢 Green<span class="seg-mult">2× Win</span></div>
+            <div class="spin-seg seg-blue"   data-seg="Blue"  >🔵 Blue<span class="seg-mult">4× Win</span></div>
+            <div class="spin-seg seg-purple" data-seg="Purple">💜 Purple<span class="seg-mult">5× WIN!</span></div>
+            <div class="spin-seg seg-yellow" data-seg="Yellow">💛 Yellow<span class="seg-mult">3× Win</span></div>
+          </div>
+          <p class="spin-note">🎥 Wheel is spun LIVE by our team after payment confirmation.<br>You will receive a video on WhatsApp!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 2: AMOUNT -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-step-num" id="stepNum2">2</div>
+      <div>
+        <div class="panel-title">Entry Amount</div>
+        <div class="panel-subtitle">All entries ₹5–₹50 only. Max ₹50 per ticket.</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <!-- Currency Toggle -->
+      <div class="currency-row">
+        <button class="curr-btn active" data-curr="INR">🇮🇳 INR (₹)</button>
+        <button class="curr-btn" data-curr="USD">🇺🇸 USD ($)</button>
+      </div>
+      <!-- Quick Amount Buttons -->
+      <div class="amount-grid" id="amountGrid"><!-- filled by JS --></div>
+      <!-- Custom Amount -->
+      <input class="form-input" id="customAmtInput" type="number" min="5" max="50" step="1"
+        placeholder="Or type a custom amount (max ₹50)..." autocomplete="off">
+      <!-- Prize Preview -->
+      <div class="prize-preview">
+        <span class="prize-preview-label">🏆 Max possible prize:</span>
+        <span class="prize-preview-val" id="prizePreviewVal">Select an amount</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: YOUR DETAILS -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-step-num" id="stepNum3">3</div>
+      <div>
+        <div class="panel-title">Your Details</div>
+        <div class="panel-subtitle">Ticket delivered to your WhatsApp number</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="playerName">Full Name *</label>
+          <input class="form-input" id="playerName" type="text" placeholder="Your full name" autocomplete="name">
+          <span class="form-error" id="playerNameError"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="playerWA">WhatsApp Number *</label>
+          <input class="form-input" id="playerWA" type="tel" placeholder="+91 98765 43210" autocomplete="tel">
+          <span class="form-error" id="playerWAError"></span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="playerEmail">Email (for receipt)</label>
+          <input class="form-input" id="playerEmail" type="email" placeholder="your@email.com" autocomplete="email">
+          <span class="form-error" id="playerEmailError"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="playerState">State / Region *</label>
+          <select class="form-input" id="playerState">
+            <option value="">Select your state...</option>
+            <optgroup label="India">
+              <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option>
+              <option>Tamil Nadu</option><option>Telangana</option><option>Gujarat</option>
+              <option>Rajasthan</option><option>West Bengal</option><option>Uttar Pradesh</option>
+              <option>Madhya Pradesh</option><option>Kerala</option><option>Punjab</option>
+              <option>Haryana</option><option>Bihar</option><option>Odisha</option>
+              <option>Assam</option><option>Goa</option><option>Other Indian State</option>
+            </optgroup>
+            <optgroup label="Outside India">
+              <option>Outside India</option>
+            </optgroup>
+          </select>
+          <span class="form-error" id="playerStateError"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: PAYMENT -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-step-num" id="stepNum4">4</div>
+      <div>
+        <div class="panel-title">Payment</div>
+        <div class="panel-subtitle">Secure & instant — UPI or Bank Transfer</div>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <!-- Method chooser -->
+      <div class="pay-methods-grid">
+        <div class="pay-method-card active" data-method="upi">
+          <h4>📱 UPI</h4>
+          <p>GPay, PhonePe, Paytm, BHIM — instant, zero fees</p>
+        </div>
+        <div class="pay-method-card" data-method="bank">
+          <h4>🏦 Bank Transfer</h4>
+          <p>NEFT / IMPS / RTGS to our verified account</p>
+        </div>
+      </div>
+
+      <!-- UPI BOX -->
+      <div class="pay-detail-box" id="upiBox">
+        <div class="qr-area">
+          <div class="qr-box">
+            <!-- REPLACE img src below with your actual QR code image -->
+            <div class="qr-placeholder">
+              <span class="qr-icon">📱</span>
+              <p>YOUR QR CODE HERE</p>
+              <p style="font-size:8px;margin-top:2px">Replace with qr.png</p>
+            </div>
+          </div>
+          <p class="qr-label">Scan with any UPI app</p>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">UPI ID</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="pay-detail-val" id="upiIdText">lucky777@upi</span>
+            <button class="copy-btn" data-copy="lucky777@upi">Copy</button>
+          </div>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Name</span>
+          <span class="pay-detail-val">Lucky777 Games</span>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Amount to Pay</span>
+          <span class="pay-detail-val" id="upiAmtDisplay">—</span>
+        </div>
+        <!-- Quick UPI App buttons -->
+        <div class="upi-apps">
+          <button class="upi-app-btn" data-app="gpay"><span>📗</span>GPay</button>
+          <button class="upi-app-btn" data-app="phonepe"><span>📘</span>PhonePe</button>
+          <button class="upi-app-btn" data-app="paytm"><span>📦</span>Paytm</button>
+          <button class="upi-app-btn" data-app="bhim"><span>🏛️</span>BHIM</button>
+        </div>
+        <div class="form-group" style="margin-top:16px;margin-bottom:0">
+          <label class="form-label" for="txnIdInput">Enter UTR / Transaction ID after paying *</label>
+          <input class="form-input" id="txnIdInput" type="text" placeholder="12-digit UTR number from your UPI app" autocomplete="off">
+          <span class="form-error" id="txnIdInputError">Please enter your payment transaction ID</span>
+        </div>
+      </div>
+
+      <!-- BANK BOX -->
+      <div class="pay-detail-box hidden" id="bankBox">
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Account Name</span>
+          <span class="pay-detail-val">Lucky777 Games</span>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Account Number</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="pay-detail-val" id="bankAccText">XXXX XXXX XXXX</span>
+            <button class="copy-btn" id="copyAccBtn" data-copy="XXXXXXXXXXXX">Copy</button>
+          </div>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">IFSC Code</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="pay-detail-val" id="ifscText">SBIN0XXXXXXX</span>
+            <button class="copy-btn" id="copyIfscBtn" data-copy="SBIN0XXXXXXX">Copy</button>
+          </div>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Bank</span>
+          <span class="pay-detail-val" id="bankNameText">State Bank of India</span>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Amount to Pay</span>
+          <span class="pay-detail-val" id="bankAmtDisplay">—</span>
+        </div>
+        <div style="background:var(--gold-dim);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;font-size:12px;color:var(--muted)">
+          ⚠️ Add your Name and Ticket ID as transfer remarks so we can identify your payment.
+        </div>
+        <div class="form-group" style="margin-top:16px;margin-bottom:0">
+          <label class="form-label" for="txnIdInput">Bank Transaction Reference *</label>
+          <input class="form-input" id="txnIdInput" type="text" placeholder="Enter your bank transaction reference number" autocomplete="off">
+          <span class="form-error" id="txnIdInputError">Please enter your transaction reference</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="order-summary">
+    <div class="order-summary-title">📋 Order Summary</div>
+    <div class="order-row"><span class="order-row-label">Game</span><span id="sumGame">Jackpot Lottery</span></div>
+    <div class="order-row"><span class="order-row-label">Your Pick</span><span id="sumPick">—</span></div>
+    <div class="order-row"><span class="order-row-label">Entry Amount</span><span id="sumAmt">—</span></div>
+    <div class="order-row"><span class="order-row-label">Max Prize</span><span id="sumPrize" style="color:var(--green)">—</span></div>
+    <div class="order-row"><span class="order-row-label">Total to Pay</span><span id="sumTotal">—</span></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-section">
+    <p class="submit-note">
+      ✅ After confirming, your ticket will be sent to <strong>📱 WhatsApp</strong> within 5 minutes.<br>
+      Draw results are announced at <strong>8:00 PM IST</strong> daily. Winners paid within 24 hours!
+    </p>
+    <button class="btn-submit" id="submitBtn">🎰 Confirm My Entry →</button>
+  </div>
+
+  <!-- MY TICKETS -->
+  <div class="panel" style="margin-top:32px">
+    <div class="panel-header">
+      <div class="panel-step-num" style="background:var(--green-dim);border-color:rgba(39,174,96,0.4);color:#2ecc71">🎫</div>
+      <div>
+        <div class="panel-title">My Recent Tickets</div>
+        <div class="panel-subtitle">Your last 5 entries from this device</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div id="ticketHistory"><!-- filled by JS --></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-backdrop" id="successModal">
+  <div class="modal-box">
+    <button class="modal-close-btn" data-close-modal="successModal">✕</button>
+    <div style="text-align:center">
+      <div style="font-size:56px;margin-bottom:12px;animation:heartbeat 1.3s ease-in-out infinite">🎉</div>
+      <h2 style="font-family:'Cinzel',serif;font-size:22px;color:var(--gold);margin-bottom:8px">Entry Confirmed!</h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+        Your lucky ticket has been registered. Tap the WhatsApp button below to receive your official ticket confirmation!
+      </p>
+    </div>
+
+    <!-- Ticket Card -->
+    <div class="ticket-card">
+      <span class="ticket-id" id="modalTicketId">LK7-XXXXXX</span>
+      <span class="ticket-sub">Your Unique Ticket ID — Save this!</span>
+      <div class="ticket-details">
+        <div class="ticket-detail-row"><span>Game:</span><span class="ticket-detail-val" id="modalGame">—</span></div>
+        <div class="ticket-detail-row"><span>Pick:</span><span class="ticket-detail-val" id="modalPick">—</span></div>
+        <div class="ticket-detail-row"><span>Entry:</span><span class="ticket-detail-val" id="modalAmount">—</span></div>
+        <div class="ticket-detail-row"><span>Max Prize:</span><span class="ticket-detail-val" id="modalPrize" style="color:var(--green)">—</span></div>
+        <div class="ticket-detail-row"><span>Player:</span><span class="ticket-detail-val" id="modalName">—</span></div>
+        <div class="ticket-detail-row"><span>Draw:</span><span class="ticket-detail-val" style="color:var(--gold)">Today 8:00 PM IST</span></div>
+      </div>
+    </div>
+
+    <a class="wa-confirm-btn" id="waConfirmBtn" href="#" target="_blank">
+      <span class="wa-icon">💬</span> Get Ticket on WhatsApp
+    </a>
+    <div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px">
+      This will open WhatsApp with your full ticket details pre-filled.
+    </div>
+    <button class="btn btn-ghost btn-full btn-md" data-close-modal="successModal">Close & Play Again</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/play.js"></script>
+</body>
+</html>

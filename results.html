@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Results — Lucky777</title>
+<link rel="stylesheet" href="css/main.css">
+<style>
+main { position:relative; z-index:2; max-width:900px; margin:0 auto; padding:calc(var(--nav-h) + 32px) 18px 80px; }
+
+/* Latest Draw */
+.latest-card {
+  background: var(--card); border: 2px solid var(--gold);
+  border-radius: var(--radius-lg); padding: 28px;
+  margin-bottom: 32px; position: relative; overflow: hidden;
+}
+.latest-card::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245,197,24,0.08), transparent 60%);
+  pointer-events:none;
+}
+.latest-draw-balls { display:flex; gap:10px; flex-wrap:wrap; margin:20px 0; align-items:center; }
+.draw-ball {
+  width:52px; height:52px; border-radius:50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color:#000; font-family:'Cinzel',serif; font-size:17px; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 4px 14px rgba(245,197,24,0.4);
+  animation: ballPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.bonus-ball {
+  background: linear-gradient(135deg, var(--red), #e74c3c) !important;
+  color:#fff !important;
+  box-shadow: 0 4px 14px rgba(192,57,43,0.4) !important;
+}
+@keyframes ballPop { from{opacity:0;transform:scale(0.3)} to{opacity:1;transform:scale(1)} }
+.latest-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-top:20px; }
+.ls-item { background:rgba(245,197,24,0.05); border:1px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
+.ls-label { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; display:block; margin-bottom:4px; }
+.ls-val { font-family:'Cinzel',serif; font-size:19px; font-weight:700; color:var(--gold); }
+
+/* Tabs */
+.result-tabs { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:5px; margin-bottom:22px; }
+.result-tab { flex:1; padding:11px 8px; border-radius:8px; border:none; background:transparent; color:var(--muted); font-family:'Cinzel',serif; font-size:12px; font-weight:700; cursor:pointer; transition:0.2s; letter-spacing:1px; -webkit-tap-highlight-color:transparent; }
+.result-tab.active { background:var(--gold); color:#000; box-shadow:0 2px 10px rgba(245,197,24,0.3); }
+
+/* Result Cards */
+.result-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); overflow:hidden; margin-bottom:14px;
+  transition:border-color 0.2s;
+}
+.result-card:hover { border-color:rgba(245,197,24,0.35); }
+.result-latest { border-color:rgba(245,197,24,0.4); }
+.result-card-header {
+  padding:12px 18px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+  background:rgba(245,197,24,0.03); flex-wrap:wrap; gap:8px;
+}
+.result-date { font-size:13px; color:var(--muted); }
+.result-time { font-size:12px; color:var(--muted); margin-left:10px; }
+.result-card-body { padding:16px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+.result-balls { display:flex; gap:7px; flex-wrap:wrap; align-items:center; }
+.mini-ball {
+  width:36px; height:36px; border-radius:50%;
+  background:var(--gold-dim); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cinzel',serif; font-size:13px; font-weight:700; color:var(--gold);
+}
+.bonus-mini { background:var(--red-dim)!important; border-color:rgba(192,57,43,0.4)!important; color:#e74c3c!important; }
+.purple-ball{ background:rgba(142,68,173,0.15)!important; border-color:rgba(142,68,173,0.4)!important; color:#9b59b6!important; }
+.result-info { display:flex; gap:20px; flex-wrap:wrap; }
+.result-prize-block { }
+.rp-label { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; display:block; margin-bottom:3px; }
+.rp-val { font-family:'Cinzel',serif; font-size:15px; font-weight:700; }
+.green-text { color:#2ecc71; }
+.gold-text  { color:var(--gold); }
+
+/* Prize Table */
+.prize-tbl { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; margin:32px 0; }
+.pt-title { padding:18px 22px; border-bottom:1px solid var(--border); font-family:'Cinzel',serif; font-size:16px; font-weight:700; background:rgba(245,197,24,0.04); }
+.pt-r { display:grid; grid-template-columns:2fr 1fr 1fr; padding:13px 22px; border-bottom:1px solid var(--border-soft); font-size:14px; gap:8px; }
+.pt-r:last-child { border-bottom:none; }
+.pt-r.th { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); background:rgba(0,0,0,0.2); font-weight:700; }
+.pt-prize { font-family:'Cinzel',serif; font-weight:700; color:var(--gold); }
+
+/* Ticket Check */
+.check-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px; margin-top:28px; text-align:center; }
+.check-box h3 { font-family:'Cinzel',serif; font-size:20px; margin-bottom:8px; }
+.check-box p { font-size:14px; color:var(--muted); margin-bottom:18px; line-height:1.65; }
+.check-input-row { display:flex; gap:10px; max-width:480px; margin:0 auto; }
+.check-result { margin-top:16px; padding:14px 18px; border-radius:var(--radius); font-size:14px; line-height:1.65; display:none; }
+.check-success { background:var(--green-dim); border:1px solid rgba(39,174,96,0.3); color:#2ecc71; }
+.check-error   { background:var(--red-dim);   border:1px solid rgba(192,57,43,0.3); color:#e74c3c; }
+.check-info    { background:var(--gold-dim);   border:1px solid var(--border);       color:var(--gold); }
+
+@media(max-width:600px){
+  .draw-ball{width:40px;height:40px;font-size:14px}
+  .check-input-row{flex-direction:column}
+  .result-card-body{flex-direction:column;align-items:flex-start}
+  .result-info{gap:14px}
+}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">🎰 LUCKY777</a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a><a href="games.html">Games</a>
+    <a href="results.html" class="active">Results</a>
+    <a href="how-to-play.html">How To Play</a>
+    <a href="play.html" class="nav-cta">🎰 Play Now</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Home</a><a href="games.html">🎮 Games</a>
+  <a href="results.html" class="active">📊 Results</a><a href="how-to-play.html">📖 How To Play</a>
+  <div class="mobile-nav-divider"></div>
+  <a href="play.html" class="nav-cta-mob">🎰 Play Now</a>
+</nav>
+
+<main>
+  <div style="text-align:center;margin-bottom:32px">
+    <span class="section-eyebrow">📊 Verified Results</span>
+    <h1 style="font-family:'Cinzel',serif;font-size:clamp(26px,7vw,44px);font-weight:900;margin-bottom:8px">Draw Results</h1>
+    <p style="font-size:14px;color:var(--muted)">All draws conducted live and results published immediately. Check your ticket below!</p>
+  </div>
+
+  <!-- LATEST DRAW -->
+  <div class="latest-card anim-scaleIn">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div>
+        <span class="badge badge-live" style="margin-bottom:8px">Latest Jackpot Draw</span>
+        <h2 style="font-family:'Cinzel',serif;font-size:20px" id="latestDate">08 Mar 2025, 8:00 PM</h2>
+      </div>
+      <a href="play.html" class="btn btn-gold btn-md">🎰 Enter Next Draw</a>
+    </div>
+    <div class="latest-draw-balls" id="latestBalls"></div>
+    <div class="latest-stats">
+      <div class="ls-item"><span class="ls-label">Jackpot</span><span class="ls-val" id="latestJackpot">₹1,77,777</span></div>
+      <div class="ls-item"><span class="ls-label">Total Entries</span><span class="ls-val" id="latestEntries">842</span></div>
+      <div class="ls-item"><span class="ls-label">Winners</span><span class="ls-val" id="latestWinners">34</span></div>
+      <div class="ls-item"><span class="ls-label">Next Draw</span><span class="ls-val" id="countdownTimer">—</span></div>
+    </div>
+  </div>
+
+  <!-- HISTORY TABS -->
+  <div class="result-tabs">
+    <button class="result-tab active" data-tab="jackpot">💰 Jackpot</button>
+    <button class="result-tab" data-tab="predict">🔮 Predict</button>
+    <button class="result-tab" data-tab="spin">🎡 Spin</button>
+  </div>
+
+  <!-- RESULTS LIST -->
+  <div id="resultsList"></div>
+
+  <!-- PRIZE TABLE -->
+  <div class="prize-tbl">
+    <div class="pt-title">🏆 Jackpot Prize Structure</div>
+    <div class="pt-r th"><span>Match</span><span>Odds</span><span>Prize</span></div>
+    <div class="pt-r"><span>6 Numbers (Jackpot)</span><span style="color:var(--muted)">1 in 15M</span><span class="pt-prize">₹1,77,777</span></div>
+    <div class="pt-r"><span>5 Numbers</span><span style="color:var(--muted)">1 in 55,000</span><span class="pt-prize">₹5,000</span></div>
+    <div class="pt-r"><span>4 Numbers</span><span style="color:var(--muted)">1 in 1,032</span><span class="pt-prize">₹500</span></div>
+    <div class="pt-r"><span>3 Numbers</span><span style="color:var(--muted)">1 in 57</span><span class="pt-prize">₹100</span></div>
+    <div class="pt-r"><span>2 Numbers</span><span style="color:var(--muted)">1 in 8</span><span class="pt-prize">₹30</span></div>
+    <div class="pt-r"><span>Bonus Ball only</span><span style="color:var(--muted)">1 in 50</span><span class="pt-prize">₹15</span></div>
+  </div>
+
+  <!-- TICKET CHECKER -->
+  <div class="check-box">
+    <h3>🔍 Check Your Ticket</h3>
+    <p>Enter your Lucky777 Ticket ID to see if you've won!<br>Your Ticket ID was sent to your WhatsApp after entry.</p>
+    <div class="check-input-row">
+      <input class="form-input" id="ticketCheckInput" placeholder="e.g. LK7-AB3X7Y" style="text-transform:uppercase;letter-spacing:2px" type="text" autocomplete="off">
+      <button class="btn btn-gold btn-md" id="checkTicketBtn" style="white-space:nowrap">Check →</button>
+    </div>
+    <div class="check-result" id="ticketCheckResult"></div>
+    <div style="margin-top:16px;font-size:12px;color:var(--muted)">
+      Can't find your ticket? <a href="https://wa.me/919876543210?text=Please%20help%20me%20find%20my%20Lucky777%20ticket" style="color:var(--gold);text-decoration:none" target="_blank">Contact us on WhatsApp →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-logo">🎰 LUCKY777</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="games.html">Games</a>
+      <a href="results.html">Results</a><a href="how-to-play.html">How To Play</a>
+      <a href="play.html">Play Now</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-disclaimer">⚠️ Lucky777 is an entertainment platform. Must be 18+ to participate. Maximum entry ₹50 per ticket. Play responsibly.</div>
+    <div class="footer-copy">© 2025 Lucky777. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/results.js"></script>
+</body>
+</html>

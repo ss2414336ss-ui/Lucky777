@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>How To Play — Lucky777</title>
+<link rel="stylesheet" href="css/main.css">
+<style>
+main { position:relative; z-index:2; max-width:900px; margin:0 auto; padding:calc(var(--nav-h) + 32px) 18px 80px; }
+
+/* Game Detail Cards */
+.gdc { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:28px; transition:border-color 0.3s; }
+.gdc:hover { border-color:rgba(245,197,24,0.4); }
+.gdc-top { padding:32px 28px 26px; background:linear-gradient(135deg,rgba(245,197,24,0.06),transparent); border-bottom:1px solid var(--border); display:flex; gap:20px; align-items:flex-start; position:relative; overflow:hidden; }
+.gdc-top::after { content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle,rgba(245,197,24,0.08),transparent); pointer-events:none; }
+.gdc-icon { width:72px; height:72px; border-radius:var(--radius); background:var(--gold-dim); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:36px; flex-shrink:0; }
+.gdc-info { flex:1; }
+.gdc-name { font-family:'Cinzel',serif; font-size:24px; font-weight:700; margin-bottom:8px; }
+.gdc-desc { font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:14px; }
+.gdc-tags { display:flex; gap:8px; flex-wrap:wrap; }
+
+.gdc-body { display:grid; grid-template-columns:1fr 1fr; }
+.gdc-col { padding:24px 28px; }
+.gdc-col:first-child { border-right:1px solid var(--border); }
+.gdc-col h4 { font-family:'Cinzel',serif; font-size:13px; color:var(--gold); margin-bottom:14px; letter-spacing:3px; text-transform:uppercase; }
+.rule-item { display:flex; gap:10px; margin-bottom:12px; font-size:14px; line-height:1.6; }
+.rule-item::before { content:'✦'; color:var(--gold); flex-shrink:0; margin-top:1px; font-size:10px; }
+.pr-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--border-soft); font-size:14px; }
+.pr-row:last-child { border-bottom:none; }
+.pr-match { color:var(--muted); }
+.pr-prize { font-family:'Cinzel',serif; font-weight:700; color:var(--gold); }
+
+.gdc-foot { padding:18px 28px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:rgba(0,0,0,0.15); }
+.gdc-from { font-family:'Cinzel',serif; }
+.gdc-from small { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; display:block; }
+.gdc-from strong { font-size:22px; color:var(--gold); }
+
+/* Steps visual */
+.steps-visual { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:48px; }
+.sv-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 16px; text-align:center; }
+.sv-num { width:50px; height:50px; border-radius:50%; background:var(--gold-dim); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:18px; font-weight:900; color:var(--gold); margin:0 auto 14px; }
+.sv-title { font-family:'Cinzel',serif; font-size:14px; font-weight:700; margin-bottom:8px; }
+.sv-desc { font-size:12px; color:var(--muted); line-height:1.6; }
+
+/* CTA banner */
+.cta-banner { background:rgba(245,197,24,0.05); border:1px solid var(--border); border-radius:var(--radius-lg); padding:40px 28px; text-align:center; margin-top:40px; }
+.cta-banner h2 { font-family:'Cinzel',serif; font-size:clamp(22px,5vw,34px); margin-bottom:12px; }
+.cta-banner p { font-size:15px; color:var(--muted); max-width:460px; margin:0 auto 26px; line-height:1.7; }
+.cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+@media(max-width:640px){
+  .gdc-top { flex-direction:column; gap:14px; }
+  .gdc-body { grid-template-columns:1fr; }
+  .gdc-col:first-child { border-right:none; border-bottom:1px solid var(--border); }
+  .gdc-foot { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">🎰 LUCKY777</a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a><a href="games.html">Games</a>
+    <a href="results.html">Results</a>
+    <a href="how-to-play.html" class="active">How To Play</a>
+    <a href="play.html" class="nav-cta">🎰 Play Now</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Home</a><a href="games.html">🎮 Games</a>
+  <a href="results.html">📊 Results</a>
+  <a href="how-to-play.html" class="active">📖 How To Play</a>
+  <div class="mobile-nav-divider"></div>
+  <a href="play.html" class="nav-cta-mob">🎰 Play Now</a>
+</nav>
+
+<main>
+  <div style="text-align:center;margin-bottom:40px">
+    <span class="section-eyebrow">📖 Full Guide</span>
+    <h1 style="font-family:'Cinzel',serif;font-size:clamp(26px,7vw,44px);font-weight:900;margin-bottom:10px">How To Play</h1>
+    <p style="font-size:15px;color:var(--muted);max-width:520px;margin:0 auto">Everything explained clearly. Simple, transparent, fair. Read once and you're ready to win!</p>
+  </div>
+
+  <!-- STEPS -->
+  <div style="margin-bottom:50px">
+    <h2 style="font-family:'Cinzel',serif;font-size:22px;text-align:center;margin-bottom:24px">Your Journey to Winning 🏆</h2>
+    <div class="steps-visual">
+      <div class="sv-card" data-anim="anim-scaleIn">
+        <div class="sv-num">1</div>
+        <div class="sv-title">Pick a Game</div>
+        <div class="sv-desc">Choose Jackpot, Prediction, or Spin the Wheel.</div>
+      </div>
+      <div class="sv-card" data-anim="anim-scaleIn delay-1">
+        <div class="sv-num">2</div>
+        <div class="sv-title">Make Picks</div>
+        <div class="sv-desc">Select your 6 numbers, predict a number, or choose a colour.</div>
+      </div>
+      <div class="sv-card" data-anim="anim-scaleIn delay-2">
+        <div class="sv-num">3</div>
+        <div class="sv-title">Pay Entry</div>
+        <div class="sv-desc">₹5–₹50 via UPI or Bank Transfer. Enter UTR after paying.</div>
+      </div>
+      <div class="sv-card" data-anim="anim-scaleIn delay-3">
+        <div class="sv-num">4</div>
+        <div class="sv-title">Get Ticket</div>
+        <div class="sv-desc">WhatsApp ticket in under 5 minutes. Save your Ticket ID!</div>
+      </div>
+      <div class="sv-card" data-anim="anim-scaleIn delay-4">
+        <div class="sv-num">5</div>
+        <div class="sv-title">Draw Time</div>
+        <div class="sv-desc">Results at 8 PM IST daily. Sent to your WhatsApp.</div>
+      </div>
+      <div class="sv-card" data-anim="anim-scaleIn delay-5">
+        <div class="sv-num">6</div>
+        <div class="sv-title">Collect</div>
+        <div class="sv-desc">Winners paid to UPI within 24 hours. 🎉</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JACKPOT -->
+  <div class="gdc" data-anim="anim-fadeUp">
+    <div class="gdc-top">
+      <div class="gdc-icon">💰</div>
+      <div class="gdc-info">
+        <div class="gdc-name">Jackpot Lottery</div>
+        <div class="gdc-desc">Pick 6 numbers from 1–50. Every evening at 8 PM IST, 6 winning numbers are drawn LIVE. The more you match, the bigger your prize — even 2 matches wins cash!</div>
+        <div class="gdc-tags">
+          <span class="badge badge-gold">Daily 8 PM Draw</span>
+          <span class="badge badge-red">Jackpot ₹1,77,777</span>
+          <span class="badge badge-green">From ₹5</span>
+        </div>
+      </div>
+    </div>
+    <div class="gdc-body">
+      <div class="gdc-col">
+        <h4>How To Play</h4>
+        <div class="rule-item">Select exactly 6 numbers from 1–50, or tap "Lucky Dip" for random picks.</div>
+        <div class="rule-item">Choose your entry: ₹5, ₹10, ₹20, or ₹50 (max ₹50 per ticket).</div>
+        <div class="rule-item">Pay via UPI (GPay/PhonePe/Paytm) or Bank Transfer.</div>
+        <div class="rule-item">Enter your UTR number after paying to confirm entry.</div>
+        <div class="rule-item">Get your ticket on WhatsApp within 5 minutes.</div>
+        <div class="rule-item">Draw at 8 PM IST. Results WhatsApp'd to all players immediately!</div>
+        <div class="rule-item">Prizes paid to your UPI within 24 hours of draw.</div>
+      </div>
+      <div class="gdc-col">
+        <h4>Prize Table</h4>
+        <div class="pr-row"><span class="pr-match">6 Match (Jackpot!)</span><span class="pr-prize">₹1,77,777</span></div>
+        <div class="pr-row"><span class="pr-match">5 Numbers Match</span><span class="pr-prize">₹5,000</span></div>
+        <div class="pr-row"><span class="pr-match">4 Numbers Match</span><span class="pr-prize">₹500</span></div>
+        <div class="pr-row"><span class="pr-match">3 Numbers Match</span><span class="pr-prize">₹100</span></div>
+        <div class="pr-row"><span class="pr-match">2 Numbers Match</span><span class="pr-prize">₹30</span></div>
+        <div class="pr-row"><span class="pr-match">Bonus Ball</span><span class="pr-prize">₹15</span></div>
+      </div>
+    </div>
+    <div class="gdc-foot">
+      <div class="gdc-from"><small>Entry from</small><strong>₹5 / $0.10</strong></div>
+      <a href="play.html?game=jackpot" class="btn btn-gold btn-md">💰 Play Jackpot →</a>
+    </div>
+  </div>
+
+  <!-- PREDICT -->
+  <div class="gdc" data-anim="anim-fadeUp delay-2">
+    <div class="gdc-top">
+      <div class="gdc-icon">🔮</div>
+      <div class="gdc-info">
+        <div class="gdc-name">Number Prediction</div>
+        <div class="gdc-desc">Predict the one lucky number (1–50) drawn every hour. Nail the exact number and win 35× your entry instantly. Draws happen every hour — 24 chances a day!</div>
+        <div class="gdc-tags">
+          <span class="badge badge-gold">Hourly Draws</span>
+          <span class="badge badge-red">Win 35× Entry</span>
+          <span class="badge badge-green">From ₹5</span>
+        </div>
+      </div>
+    </div>
+    <div class="gdc-body">
+      <div class="gdc-col">
+        <h4>How To Play</h4>
+        <div class="rule-item">Pick any ONE number from 1 to 50.</div>
+        <div class="rule-item">Choose entry: ₹5, ₹10, ₹20, ₹50 (max ₹50).</div>
+        <div class="rule-item">Pay and get your prediction ticket on WhatsApp.</div>
+        <div class="rule-item">Every hour at :00, our team draws a number live.</div>
+        <div class="rule-item">Exact match = 35× entry paid to your UPI immediately!</div>
+        <div class="rule-item">Odds: 1 in 50. Fair, transparent, announced live.</div>
+      </div>
+      <div class="gdc-col">
+        <h4>Prize Examples</h4>
+        <div class="pr-row"><span class="pr-match">₹5 entry → win</span><span class="pr-prize" style="color:#2ecc71">₹175</span></div>
+        <div class="pr-row"><span class="pr-match">₹10 entry → win</span><span class="pr-prize" style="color:#2ecc71">₹350</span></div>
+        <div class="pr-row"><span class="pr-match">₹20 entry → win</span><span class="pr-prize" style="color:#2ecc71">₹700</span></div>
+        <div class="pr-row"><span class="pr-match">₹50 entry → win</span><span class="pr-prize" style="color:#2ecc71">₹1,750</span></div>
+        <div class="pr-row"><span class="pr-match">Odds</span><span class="pr-prize">1 in 50</span></div>
+        <div class="pr-row"><span class="pr-match">Draws per day</span><span class="pr-prize">24</span></div>
+      </div>
+    </div>
+    <div class="gdc-foot">
+      <div class="gdc-from"><small>Entry from</small><strong>₹5 / $0.10</strong></div>
+      <a href="play.html?game=predict" class="btn btn-gold btn-md">🔮 Play Prediction →</a>
+    </div>
+  </div>
+
+  <!-- SPIN -->
+  <div class="gdc" data-anim="anim-fadeUp delay-3">
+    <div class="gdc-top">
+      <div class="gdc-icon">🎡</div>
+      <div class="gdc-info">
+        <div class="gdc-name">Spin the Wheel</div>
+        <div class="gdc-desc">Choose your lucky colour segment on our 6-colour wheel. After payment is confirmed, our team spins the wheel LIVE on WhatsApp video. Land on your colour = YOU WIN!</div>
+        <div class="gdc-tags">
+          <span class="badge badge-gold">Live Video Proof</span>
+          <span class="badge badge-red">Win up to 5×</span>
+          <span class="badge badge-green">From ₹10</span>
+        </div>
+      </div>
+    </div>
+    <div class="gdc-body">
+      <div class="gdc-col">
+        <h4>How To Play</h4>
+        <div class="rule-item">Select a colour: Red, Gold, Green, Blue, Purple or Yellow.</div>
+        <div class="rule-item">Each colour has a different multiplier (2× to 5×).</div>
+        <div class="rule-item">Pay entry (₹10–₹50) via UPI or Bank Transfer.</div>
+        <div class="rule-item">Our team spins a REAL wheel live and records WhatsApp video.</div>
+        <div class="rule-item">Land on your colour → prize paid to UPI within 2 hours!</div>
+        <div class="rule-item">Purple is rarest but pays 5× your entry!</div>
+      </div>
+      <div class="gdc-col">
+        <h4>Segment Multipliers</h4>
+        <div class="pr-row"><span class="pr-match">🔴 Red (2 segments)</span><span class="pr-prize">2× Entry</span></div>
+        <div class="pr-row"><span class="pr-match">⭐ Gold</span><span class="pr-prize">3× Entry</span></div>
+        <div class="pr-row"><span class="pr-match">🟢 Green</span><span class="pr-prize">2× Entry</span></div>
+        <div class="pr-row"><span class="pr-match">🔵 Blue</span><span class="pr-prize">4× Entry</span></div>
+        <div class="pr-row"><span class="pr-match">💜 Purple (RARE!)</span><span class="pr-prize">5× Entry</span></div>
+        <div class="pr-row"><span class="pr-match">💛 Yellow</span><span class="pr-prize">3× Entry</span></div>
+      </div>
+    </div>
+    <div class="gdc-foot">
+      <div class="gdc-from"><small>Entry from</small><strong>₹10 / $0.25</strong></div>
+      <a href="play.html?game=spin" class="btn btn-gold btn-md">🎡 Play Spin →</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div style="margin-top:50px">
+    <h2 style="font-family:'Cinzel',serif;font-size:clamp(20px,5vw,32px);text-align:center;margin-bottom:24px">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question"><span>Is Lucky777 legal?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Lucky777 operates as an entertainment-based number prediction platform where participation is voluntary. We follow all applicable guidelines. Players must be 18+. We recommend checking your local state laws. Our draws are transparent and recorded.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>How fast do I get my WhatsApp ticket?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Within 5 minutes of your payment being verified. You will receive your unique Ticket ID, game details, your picks, and draw time. Make sure your WhatsApp number is active and receiving messages.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>What is UTR and where do I find it?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">UTR (Unique Transaction Reference) is a 12-digit number generated after every UPI payment. You can find it in your GPay/PhonePe/Paytm payment history under "Transaction ID" or "Reference Number". Always enter this after paying so we can verify your entry.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>What's the minimum and maximum entry?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Minimum entry is ₹5 for Jackpot and Prediction games, and ₹10 for Spin the Wheel. Maximum entry is ₹50 per ticket. You may purchase multiple tickets for the same draw. For USD players, minimum is $0.10 and maximum is $1.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>How are draws conducted fairly?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Jackpot draws use a certified random number generator. Spin the Wheel is recorded on a real spinning wheel on live WhatsApp video. All prediction draws are announced live. Draw videos and screenshots are shared with all WhatsApp participants for full transparency.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>How and when are prizes paid?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">All prizes are paid directly to your UPI ID within 24 hours of the draw. For prize amounts above ₹10,000, we may request a PAN card photo for compliance. Small prizes (₹15–₹500) are typically paid within 2 hours.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>Can I cancel my entry after paying?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Once a ticket is issued, entries cannot be cancelled or refunded. This is because the ticket is linked to a specific draw and registered in our system. If there is a technical issue with your entry, contact us immediately on WhatsApp.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span>Can I play from outside India?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Yes! International players can pay via Bank Transfer (SWIFT/wire) or crypto equivalent. Entry amounts are accepted in USD. Contact us on WhatsApp for international payment arrangements. Winners outside India receive prizes via international bank transfer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2>Ready to Try Your Luck? 🍀</h2>
+    <p>Join 14,000+ daily players. Pick your numbers, spin the wheel — start from just ₹5!</p>
+    <div class="cta-btns">
+      <a href="play.html" class="btn btn-gold btn-lg anim-glow">🎰 Play Now — From ₹5</a>
+      <a href="https://wa.me/919876543210?text=Hi%20Lucky777%2C%20I%20want%20to%20play!" class="btn btn-green btn-lg" target="_blank">💬 WhatsApp Us</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-logo">🎰 LUCKY777</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="games.html">Games</a>
+      <a href="results.html">Results</a><a href="how-to-play.html">How To Play</a>
+      <a href="play.html">Play Now</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-disclaimer">⚠️ Lucky777 is an entertainment platform. Must be 18+. Maximum entry ₹50. Play responsibly.</div>
+    <div class="footer-copy">© 2025 Lucky777. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
